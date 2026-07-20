@@ -13,24 +13,34 @@ RoboSelect360 is an independent six-layer analysis platform covering the humanoi
 | Regulatory | CE / AI Act / Cyber Resilience Act due-diligence *(in progress)* |
 | Reports | Automated buyer-side TCO reports |
 
-Connect any MCP-compatible client (Claude Desktop, Cursor, custom agents) and query the catalogue directly.
+Connect an MCP-compatible client and query the catalogue directly. **Claude Desktop is the tested path today** - see [Client support](#client-support) below.
 
 ---
 
 ## Quickstart (free tier)
 
 1. **Get a free key** at [roboselect360.com/en/contact.html](https://roboselect360.com/en/contact.html) - the "Get started for free" section. You'll receive a key starting with `rbs_` (no card, no credits consumed).
-2. **Point your MCP client** at the server:
+2. **Connect your client** - two ways:
+
+   **Claude Desktop (fastest)** - download [`roboselect360-free.mcpb`](https://github.com/Roboselect360/roboselect360-mcp/releases/latest) from the latest release, open it, and paste your key when prompted. No config file to edit.
+
+   **Other MCP clients** (untested, see below) - point them at the server:
    - Endpoint: `https://mcp-free.roboselect360.com/mcp`
    - Header: `X-API-Key: rbs_your_key_here`
 
-   Clients typically connect through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) (requires [Node.js](https://nodejs.org)):
+   These clients typically connect through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) (requires [Node.js](https://nodejs.org)):
 
    ```bash
    npx -y mcp-remote https://mcp-free.roboselect360.com/mcp --header "X-API-Key: rbs_your_key_here"
    ```
 
-See [QUICKSTART.md](./QUICKSTART.md) for a ready-to-paste Claude Desktop config (Windows & macOS) and [examples/](./examples/) for sample calls.
+See [QUICKSTART.md](./QUICKSTART.md) for both paths step by step (Windows & macOS) and [examples/](./examples/) for sample calls.
+
+### Client support
+
+**Claude Desktop is the only client we have tested so far**, on Windows and macOS.
+
+The `.mcpb` bundle is a Claude Desktop extension format, so that path is specific to it. The server itself is standard MCP over Streamable HTTP, so other MCP clients may work using the endpoint and header above - we have not verified any of them. If you get it running elsewhere, tell us at **contact@roboselect360.com** and we will document it.
 
 ---
 
@@ -44,7 +54,9 @@ The free tier exposes **9 PUBLIC tools** - the robot catalogue, specs and system
 
 (where `*` is `hardware_`, `mechanical_` or `software_`).
 
-**Premium** unlocks the deep layers - BOM teardowns, dependency profiles, geopolitical / critical-material risk analysis and cross-robot comparison (**27 tools** across the three layers). Premium is provisioned on request: email **contact@roboselect360.com** or visit [roboselect360.com/en](https://roboselect360.com/en). Your existing `rbs_` key can serve for everything.
+**Premium** unlocks the deep layers - BOM teardowns, dependency profiles, geopolitical / critical-material risk analysis and cross-robot comparison (**27 tools** across the three layers). Premium is provisioned on request: email **contact@roboselect360.com** or visit [roboselect360.com/en](https://roboselect360.com/en). For MCP you receive **access credentials (an ID and a secret)** for the premium endpoint - not an `rbs_` key. If you also use the REST API, a premium `rbs_` key comes with it. Both channels draw on a single shared credit balance.
+
+If you were already using the free connector, **remove it when you install the premium one**. Both expose the same tool names, and running them side by side leaves your client unable to tell which one to call.
 
 ---
 
