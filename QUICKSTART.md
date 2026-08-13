@@ -2,39 +2,25 @@
 
 ## What you need
 
-- **Claude Desktop** - the only client we have tested so far (Windows and macOS). Other MCP clients should work through Option B, but none has been verified yet.
-- A free key starting with `rbs_` (Step 1 below).
-- **For the manual setup only (Option B):** [Node.js](https://nodejs.org) (LTS version) - the connection tool `mcp-remote` runs on it.
+- **Claude Desktop** or **claude.ai** - the only client where the connection succeeds today (Windows and macOS). Any MCP client that accepts an unauthenticated remote server should work.
+- Nothing else. No key, no account, no install.
+- **For the manual setup only:** [Node.js](https://nodejs.org) (LTS version) - the connection tool `mcp-remote` runs on it.
 
-## 1. Get a free key
+## 1. Connect
 
-Go to [roboselect360.com/en/contact.html](https://roboselect360.com/en/contact.html), fill in the **"Get started for free"** section with your email, then click the confirmation link you receive. Your `rbs_` key is delivered immediately - no manual review.
-
-The free key works for **both** the MCP server and the REST API.
-
-## 2. Connect
-
-Two ways. Option A is the fastest if you use Claude Desktop; Option B works with any client.
-
-### Option A - One-click bundle (Claude Desktop)
-
-1. Download **[`roboselect360-free.mcpb`](https://github.com/Roboselect360/roboselect360-mcp/releases/latest)** from the latest release.
-2. Open the file. Claude Desktop picks it up and shows its extension installer. If double-clicking does nothing, open Claude Desktop, go to **Settings > Extensions**, choose **install from file**, and select the `.mcpb`.
-3. Paste your `rbs_` key when prompted, then enable the extension.
-
-The connector and its dependencies ship inside the bundle, so there is no config file to edit and no download on first launch.
-
-### Option B - Manual configuration
-
-Use this for Claude Desktop if you prefer not to install the bundle, or for any other MCP client. Clients other than Claude Desktop are untested at this stage.
-
-The server speaks **Streamable HTTP** at:
+One address:
 
 ```
 https://mcp-free.roboselect360.com/mcp
 ```
 
-Authenticate with the header `X-API-Key: rbs_...`.
+In **Claude Desktop** or on **claude.ai**: Settings, Connectors, **Add custom connector**, paste the address. Leave the **OAuth client ID and secret empty** - this server does not ask for them.
+
+The nine free tools appear immediately: the 34-robot catalogue, availability and viability scores, across the semiconductor, mechanical and software layers.
+
+### Manual configuration
+
+For clients without a connector screen. The server speaks **Streamable HTTP** and needs no authentication.
 
 For Claude Desktop, add this to your `claude_desktop_config.json`:
 
@@ -48,9 +34,7 @@ For Claude Desktop, add this to your `claude_desktop_config.json`:
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp-free.roboselect360.com/mcp",
-        "--header",
-        "X-API-Key: rbs_your_key_here"
+        "https://mcp-free.roboselect360.com/mcp"
       ]
     }
   }
@@ -71,9 +55,7 @@ Use `cmd` as the command:
         "npx",
         "-y",
         "mcp-remote",
-        "https://mcp-free.roboselect360.com/mcp",
-        "--header",
-        "X-API-Key: rbs_your_key_here"
+        "https://mcp-free.roboselect360.com/mcp"
       ]
     }
   }

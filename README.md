@@ -19,28 +19,31 @@ Connect an MCP-compatible client and query the catalogue directly. **Claude Desk
 
 ## Quickstart (free tier)
 
-1. **Get a free key** at [roboselect360.com/en/contact.html](https://roboselect360.com/en/contact.html) - the "Get started for free" section. You'll receive a key starting with `rbs_` (no card, no credits consumed).
-2. **Connect your client** - two ways:
+**No key, no account, no install.** Paste one address into your MCP client.
 
-   **Claude Desktop (fastest)** - download [`roboselect360-free.mcpb`](https://github.com/Roboselect360/roboselect360-mcp/releases/latest) from the latest release, open it, and paste your key when prompted. No config file to edit.
+```
+https://mcp-free.roboselect360.com/mcp
+```
 
-   **Other MCP clients** (untested, see below) - point them at the server:
-   - Endpoint: `https://mcp-free.roboselect360.com/mcp`
-   - Header: `X-API-Key: rbs_your_key_here`
+**Claude Desktop or claude.ai** - Settings, Connectors, Add custom connector, paste the address. Leave the OAuth fields empty. The nine tools appear immediately.
 
-   These clients typically connect through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) (requires [Node.js](https://nodejs.org)):
+**Other MCP clients** - same address, no header. Most connect through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) (requires [Node.js](https://nodejs.org)):
 
-   ```bash
-   npx -y mcp-remote https://mcp-free.roboselect360.com/mcp --header "X-API-Key: rbs_your_key_here"
-   ```
+```bash
+npx -y mcp-remote https://mcp-free.roboselect360.com/mcp
+```
 
-See [QUICKSTART.md](./QUICKSTART.md) for both paths step by step (Windows & macOS) and [examples/](./examples/) for sample calls.
+A free `rbs_` key is still needed for the **REST API** (`api.roboselect360.com`, header `X-API-Key`). Request one at [roboselect360.com/en/contact.html](https://roboselect360.com/en/contact.html). It also works on the MCP server, where it is no longer required.
+
+See [QUICKSTART.md](./QUICKSTART.md) for step-by-step instructions and [examples/](./examples/) for sample calls.
 
 ### Client support
 
-**Claude Desktop is the only client we have tested so far**, on Windows and macOS.
+**Claude Desktop is the only client where the connection succeeds today**, on Windows and macOS.
 
-The `.mcpb` bundle is a Claude Desktop extension format, so that path is specific to it. The server itself is standard MCP over Streamable HTTP, so other MCP clients may work using the endpoint and header above - we have not verified any of them. If you get it running elsewhere, tell us at **contact@roboselect360.com** and we will document it.
+Verified on 2026-08-13: **Claude Desktop connects with the address alone.** **Perplexity refuses** - it requires OAuth with automatic client registration, which this server does not offer yet. **ChatGPT** exposes custom connectors only in developer mode on a paid plan, so we could not test it.
+
+The server is standard MCP over Streamable HTTP, so any client that accepts an unauthenticated remote server should work. If you get it running elsewhere, tell us at **contact@roboselect360.com** and we will document it.
 
 ---
 
