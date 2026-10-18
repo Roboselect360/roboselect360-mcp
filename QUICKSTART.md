@@ -2,7 +2,7 @@
 
 ## What you need
 
-- **Claude Desktop** or **claude.ai** - the only client where the connection succeeds today (Windows and macOS). Any MCP client that accepts an unauthenticated remote server should work.
+- **Claude Desktop** or **claude.ai**, **ChatGPT** (custom connector) or **Codex** (`codex mcp add roboselect --url https://mcp.roboselect360.com/mcp`) - all verified on the free tier. Any MCP client that accepts an unauthenticated remote server should work.
 - Nothing else. No key, no account, no install.
 - **For the manual setup only:** [Node.js](https://nodejs.org) (LTS version) - the connection tool `mcp-remote` runs on it.
 
@@ -11,12 +11,12 @@
 One address:
 
 ```
-https://mcp-free.roboselect360.com/mcp
+https://mcp.roboselect360.com/mcp
 ```
 
 In **Claude Desktop** or on **claude.ai**: Settings, Connectors, **Add custom connector**, paste the address. Leave the **OAuth client ID and secret empty** - this server does not ask for them.
 
-The nine free tools appear immediately: the 34-robot catalogue, availability and viability scores, across the semiconductor, mechanical and software layers.
+All 29 tools appear immediately. 10 answer for free - the robot catalogue, profiles, availability and viability scores across the semiconductor, mechanical and software layers, plus the access manifest; the others name the robot to buy to access them.
 
 ### Manual configuration
 
@@ -29,12 +29,12 @@ For Claude Desktop, add this to your `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "roboselect360-free": {
+    "roboselect360": {
       "command": "npx",
       "args": [
         "-y",
         "mcp-remote",
-        "https://mcp-free.roboselect360.com/mcp"
+        "https://mcp.roboselect360.com/mcp"
       ]
     }
   }
@@ -48,14 +48,14 @@ Use `cmd` as the command:
 ```json
 {
   "mcpServers": {
-    "roboselect360-free": {
+    "roboselect360": {
       "command": "cmd",
       "args": [
         "/c",
         "npx",
         "-y",
         "mcp-remote",
-        "https://mcp-free.roboselect360.com/mcp"
+        "https://mcp.roboselect360.com/mcp"
       ]
     }
   }
@@ -64,7 +64,7 @@ Use `cmd` as the command:
 
 **Quit Claude Desktop completely** (not just the window - close it from the taskbar / menu bar too), then reopen it. You should see the RoboSelect360 tools appear. First launch may take ~30 s while `mcp-remote` downloads.
 
-## 3. Try it
+## 2. Try it
 
 Ask your agent something like:
 
@@ -76,10 +76,10 @@ See [examples/](./examples/) for more.
 
 ## Upgrading to premium
 
-The free tier is PUBLIC-only (catalogue + specs). Premium unlocks BOM teardowns, dependency profiles, geopolitical / critical-material risk analysis and cross-robot comparison (27 tools).
+The free tier covers the catalogue and robot profiles. Paid access unlocks bill-of-materials teardowns, dependency profiles, geopolitical and critical-material risk, cross-robot comparison and the observed capabilities of each robot.
 
-For MCP you receive **access credentials (an ID and a secret)** for the premium endpoint - not an `rbs_` key. If you also use the REST API, a premium `rbs_` key comes with it, and both channels draw on a single shared credit balance.
+Paid access is sold **per robot, €390 excl. VAT**. You receive an `rbs_` key: add it as the `X-API-Key` header of your connector, on the same address `https://mcp.roboselect360.com/mcp` (in Claude: Settings > Connectors > Add custom connector, Authentication: None, then the request header). The same key works on the REST API.
 
-If you were already using the free connector, **remove it when you install the premium one**. Both expose the same tool names, and running them side by side leaves your client unable to tell which one to call.
+Connector headers can only be set when the connector is created: to add your key, delete the free connector and create it again with the header. Keep a single RoboSelect360 connector - two connectors expose the same tool names and leave your client unable to tell which one to call.
 
-To request premium access, email **contact@roboselect360.com** or visit [roboselect360.com/en](https://roboselect360.com/en).
+Buy access to a robot at [roboselect360.com/en/tarifs.html](https://roboselect360.com/en/tarifs.html). For anything else, email **contact@roboselect360.com**.
