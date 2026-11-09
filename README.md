@@ -9,7 +9,7 @@ Humanoid robots are moving from the lab to the factory, but the information need
 | What can this robot actually do? | Observed capabilities, each backed by a dated source - failures included, manufacturer claims never taken as proof |
 | What does it really cost? | Specs, pricing, availability and viability scoring; buyer-side TCO and ROI |
 | What is inside, and from where? | Semiconductor, mechanical and software bills of materials, with supply-chain and geopolitical dependency risk |
-| What does regulation require? | Machinery Regulation, AI Act and Cyber Resilience Act due diligence *(in progress)* |
+| What does regulation require? | Regulatory alerts by country of the site in the pilot preparation tool; readiness dossiers by country (EU, France, UK, US, China, India) |
 
 Connect an MCP-compatible client and query the data directly - see [Client support](#client-support) below.
 
@@ -23,7 +23,7 @@ Connect an MCP-compatible client and query the data directly - see [Client suppo
 https://mcp.roboselect360.com/mcp
 ```
 
-**Claude Desktop or claude.ai** - Settings, Connectors, Add custom connector, paste the address. Leave the OAuth fields empty. All 29 tools appear immediately: 10 answer for free, the others name the robot to buy to access them.
+**Claude Desktop or claude.ai** - Settings, Connectors, Add custom connector, paste the address. Leave the OAuth fields empty. All 32 tools appear immediately: 11 answer for free, the others name the robot to buy to access them.
 
 **Other MCP clients** - same address, no header. Clients without a connector screen can go through [`mcp-remote`](https://www.npmjs.com/package/mcp-remote) (requires [Node.js](https://nodejs.org)):
 
@@ -37,9 +37,9 @@ See [QUICKSTART.md](./QUICKSTART.md) for step-by-step instructions and [examples
 
 ### Client support
 
-**Verified with real users:** Claude (desktop and web) connects with no key, no account and no configuration file: the full connector URL is all that is required. **ChatGPT** (custom connector) and **Codex** (`codex mcp add roboselect --url https://mcp.roboselect360.com/mcp`) work the same way on the free tier. The URL must carry the `/mcp` path: the bare hostname returns 404 and the connector fails at "Connect to the server".
+**Verified with real users:** Claude (desktop and web) connects with no key, no account and no configuration file: the full connector URL is all that is required. **ChatGPT** (custom connector) and **Codex** (`codex mcp add roboselect --url https://mcp.roboselect360.com/mcp`) work the same way on the free tier, and so does **Kimi**. The URL must carry the `/mcp` path: the bare hostname returns 404 and the connector fails at "Connect to the server".
 
-For paid access with an `rbs_` key, **Claude is the verified client** (key in the connector's `X-API-Key` header). Passing the key from ChatGPT or Codex has not been validated yet. **Perplexity refuses** (checked 2026-08-13): it requires OAuth with automatic client registration.
+For paid access with an `rbs_` key, **Claude is the verified client** (key in the connector's `X-API-Key` header). Passing the key from ChatGPT or Codex has not been validated yet. **Perplexity** connects on the free tier through OAuth (verified 2026-10-18): it receives public data only, so purchased robots cannot be opened from it.
 
 The server is standard MCP over Streamable HTTP, so any client that accepts an unauthenticated remote server should work. If you get it running elsewhere, tell us at **contact@roboselect360.com** and we will document it.
 
@@ -47,16 +47,19 @@ The server is standard MCP over Streamable HTTP, so any client that accepts an u
 
 ## What the free tier gives you
 
-All 29 tools are listed; **10 answer without a key** - the robot catalogue, profiles and system status across the three teardown layers, plus the access manifest:
+All 32 tools are listed; **11 answer without a key** - the robot catalogue, profiles and system status across the three teardown layers, plus the access manifest and the pilot preparation tool:
 
 - `*_list_robots` - the full robot catalogue
-- `*_get_robot` - full commercial profile of one robot
+- `*_get_robot` - full commercial profile of one robot, with its observed-capability labels (the strength of the best evidence per capability)
 - `*_get_system_status` - dataset coverage and freshness
 - `get_access_manifest` - what is open to you, and how to open the rest
+- `prepare_pilot` - the G.R.O.U.N.D. method: a needs sheet for a first humanoid robot pilot, one question at a time
 
 (where `*` is `hardware_`, `mechanical_` or `software_`).
 
-**Paid access** unlocks the deep layers - bill-of-materials teardowns, dependency profiles, geopolitical and critical-material risk, cross-robot comparison, and the observed capabilities of each robot. It is sold **per robot, €390 excl. VAT**, at [roboselect360.com/en/tarifs.html](https://roboselect360.com/en/tarifs.html), and opens that robot's full analysis. You receive an `rbs_` key: add it as the `X-API-Key` header of your connector, on the same address. The same key works on the REST API.
+**Paid access** unlocks the deep layers - bill-of-materials teardowns, dependency profiles, geopolitical and critical-material risk, cross-robot comparison, the observed capabilities of each robot with every dated observation, and its after-sales support profile. It is sold **per robot, €390 excl. VAT**, at [roboselect360.com/en/tarifs.html](https://roboselect360.com/en/tarifs.html), and opens that robot's full analysis. You receive an `rbs_` key: add it as the `X-API-Key` header of your connector, on the same address. The same key works on the REST API.
+
+The **pilot decision file** (`build_pilot_decision_file`, the paid follow-up of `prepare_pilot`) opens with its own access right, separate from robot access: request it at [roboselect360.com/en/prepare-a-robot-pilot.html](https://roboselect360.com/en/prepare-a-robot-pilot.html).
 
 Connector headers can only be set when the connector is created: to add your key, delete the free connector and create it again with the header. Keep a single RoboSelect360 connector - two connectors expose the same tool names and leave your client unable to tell which one to call.
 
