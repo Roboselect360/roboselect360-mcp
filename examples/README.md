@@ -1,6 +1,6 @@
 # Examples
 
-Sample interactions with the RoboSelect360 MCP server, free tier (10 tools answer without a key).
+Sample interactions with the RoboSelect360 MCP server, free tier (11 tools answer without a key).
 
 These are natural-language prompts you can give an MCP-enabled agent; the agent
 picks the right tool automatically.
@@ -56,6 +56,12 @@ Once connected (see [QUICKSTART](../QUICKSTART.md)), paste any of these into a c
 - "What's the price and key specs of the Agility Digit?"
 - "What's the viability score of the Figure 03?"
 - "What data does RoboSelect360 have, and how fresh is it?"
+
+**Prepare a first pilot (free)**
+
+- "I want to prepare a first humanoid robot pilot in my warehouse."
+
+Calls `prepare_pilot` -> one question at a time, then a needs sheet: your need structured, what the market has proven on your task (counted across the panel, no robot named) and the points to watch for your country.
 
 **Compare robots (free - commercial data only)**
 
